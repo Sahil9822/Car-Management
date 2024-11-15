@@ -7,8 +7,6 @@ export default function Search() {
   const [sidebardata, setSidebardata] = useState({
     searchTerm: '',
     type: 'all',
-    parking: false,
-    furnished: false,
     offer: false,
     sort: 'created_at',
     order: 'desc',
@@ -22,8 +20,6 @@ export default function Search() {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get('searchTerm');
     const typeFromUrl = urlParams.get('type');
-    const parkingFromUrl = urlParams.get('parking');
-    const furnishedFromUrl = urlParams.get('furnished');
     const offerFromUrl = urlParams.get('offer');
     const sortFromUrl = urlParams.get('sort');
     const orderFromUrl = urlParams.get('order');
@@ -31,8 +27,6 @@ export default function Search() {
     if (
       searchTermFromUrl ||
       typeFromUrl ||
-      parkingFromUrl ||
-      furnishedFromUrl ||
       offerFromUrl ||
       sortFromUrl ||
       orderFromUrl
@@ -40,8 +34,6 @@ export default function Search() {
       setSidebardata({
         searchTerm: searchTermFromUrl || '',
         type: typeFromUrl || 'all',
-        parking: parkingFromUrl === 'true' ? true : false,
-        furnished: furnishedFromUrl === 'true' ? true : false,
         offer: offerFromUrl === 'true' ? true : false,
         sort: sortFromUrl || 'created_at',
         order: orderFromUrl || 'desc',
@@ -80,8 +72,6 @@ export default function Search() {
     }
 
     if (
-      e.target.id === 'parking' ||
-      e.target.id === 'furnished' ||
       e.target.id === 'offer'
     ) {
       setSidebardata({
@@ -105,8 +95,6 @@ export default function Search() {
     const urlParams = new URLSearchParams();
     urlParams.set('searchTerm', sidebardata.searchTerm);
     urlParams.set('type', sidebardata.type);
-    urlParams.set('parking', sidebardata.parking);
-    urlParams.set('furnished', sidebardata.furnished);
     urlParams.set('offer', sidebardata.offer);
     urlParams.set('sort', sidebardata.sort);
     urlParams.set('order', sidebardata.order);
@@ -133,7 +121,7 @@ export default function Search() {
       <form onSubmit={handleSubmit} className='flex flex-col gap-8'>
         <div className='flex items-center gap-2'>
           <label className='whitespace-nowrap font-semibold'>Search Term:</label>
-          <input type='text' id='searchTerm' placeholder='Search...' className='border rounded-lg p-3 w-full' value={sidebardata.searchTerm} onChange={handleChange}/>
+          <input type='text' id='searchTerm' placeholder='Search...' className='border rounded-lg p-3 w-full text-gray-600' value={sidebardata.searchTerm} onChange={handleChange}/>
         </div>
         <div className='flex gap-2 flex-wrap items-center'>
           <label className='font-semibold'>Type:</label>
@@ -154,20 +142,9 @@ export default function Search() {
             <span>Offer</span>
           </div>
         </div>
-        <div className='flex gap-2 flex-wrap items-center'>
-          <label className='font-semibold'>Amenities:</label>
-            <div className='flex gap-2'>
-              <input type='checkbox' id='parking' className='w-5' onChange={handleChange} checked={sidebardata.parking}/>
-              <span>Parking</span>
-            </div>
-            <div className='flex gap-2'>
-              <input type='checkbox' id='furnished' className='w-5' onChange={handleChange} checked={sidebardata.furnished}/>
-              <span>Furnished</span>
-            </div>
-        </div>
         <div className='flex items-center gap-2'>
           <label className='font-semibold'>Sort:</label>
-          <select onChange={handleChange} defaultValue={'created_at_desc'} id='sort_order' className='border rounded-lg p-3'>
+          <select onChange={handleChange} defaultValue={'created_at_desc'} id='sort_order' className='border rounded-lg p-3 text-gray-500'>
             <option value='regularPrice_desc'>Price high to low</option>
             <option value='regularPrice_asc'>Price low to hight</option>
             <option value='createdAt_desc'>Latest</option>
@@ -178,7 +155,7 @@ export default function Search() {
       </form>
     </div>
     <div className='flex-1'>
-      <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>Listing results:</h1>
+      <h1 className='text-3xl font-semibold border-b p-3 text-grey-500 mt-5'>Listing results:</h1>
       <div className='p-7 flex flex-wrap gap-4'>
         {!loading && listings.length === 0 && (<p className='text-xl text-slate-700'>No listing found!</p>)}
         {loading && (<p className='text-xl text-slate-700 text-center w-full'>Loading...</p>)}
